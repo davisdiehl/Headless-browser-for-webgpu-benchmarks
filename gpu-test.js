@@ -7,7 +7,7 @@ const puppeteer = require('puppeteer');
   });
 
   const page = await browser.newPage();
-  await page.goto('https://webgpu.report'); // Simple public test page
+  await page.goto('https://example.com'); // Simple public test page
 
   await page.waitForSelector('body');
   const html = await page.content();
