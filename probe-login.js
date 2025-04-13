@@ -33,6 +33,10 @@ const ATTEMPTS = [
   console.log('🌐 Navigating to riddlenode login page...');
   await page.goto('https://riddlenode.com/multi-asset-multi-test');
 
+  // 🔍 Dump raw HTML for inspection
+  await fs.promises.writeFile('debug.html', await page.content());
+  console.log('📄 Saved debug.html with raw page content');
+
   for (const attempt of ATTEMPTS) {
     console.log(`🔍 Trying login method: ${attempt.name}`);
     try {
