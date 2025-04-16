@@ -9,13 +9,14 @@ const puppeteer = require('puppeteer');
   const page = await browser.newPage();
 
   // Step 1: Log in
-  await page.goto('https://riddlenode.com/login', { waitUntil: 'networkidle2' });
-  await page.type('input[name="username"], input[type="email"]', 'davis-diehl@protonmail.com');
+  await page.goto('https://riddlenode.com/', { waitUntil: 'networkidle2' });
+  await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36');
+  await page.waitForSelector('[data-amplify-authenticator]', { timeout: 10000 });
+  await new Promise(res => setTimeout(res, 4000));
+  await page.type('input[name="username"]', 'davis-diehl@protonmail.com');
   await page.type('input[name="password"]', 'wesham-sonki2-heMWon');
-  await Promise.all([
-    page.click('button[type="submit"], button'),
-    page.waitForNavigation({ waitUntil: 'networkidle2' })
-  ]);
+  await page.keyboard.press('Enter');
+  await new Promise(res => setTimeout(res, 8000));
 
   // Step 2: Go to the test page
   await page.goto('https://riddlenode.com/multi-asset-multi-test', { waitUntil: 'networkidle2' });
@@ -29,7 +30,7 @@ const puppeteer = require('puppeteer');
   });
 
   // Step 4: Wait for logs to populate
-  await page.waitForTimeout(10000); // Adjust if needed
+  await new Promise(res => setTimeout(res, 10000)); // Adjust if needed
 
   // Step 5: Extract and print logs
   const logs = await page.evaluate(() => {
